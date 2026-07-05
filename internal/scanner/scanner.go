@@ -1,5 +1,9 @@
 package scanner
-import "context"
+
+import (
+	"context"
+	"path/filepath"
+)
 
 
 type Scanner struct {
@@ -18,5 +22,9 @@ func New(opts ...Option) *Scanner {
 }
 
 func (s *Scanner) Scan(ctx context.Context, root string) ([]SourceFile, error) {
-	return nil, nil
+	root, err := filepath.Abs(root)
+	if err != nil {
+		return nil, err
+	}
+	return s.walk(ctx, root)
 }
