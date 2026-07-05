@@ -1,4 +1,4 @@
-package memoria
+package main
 import (
 	"log"
 	"github.com/11himanshusharma/memoria/internal/cli"
