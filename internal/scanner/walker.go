@@ -6,7 +6,9 @@ import (
 	"path/filepath"
 )
 
-func (s *Scanner) walk(ctx context.Context, root string, it *Iterator) error {
+func (s *Scanner) walk(ctx context.Context, root string, out chan<- SourceFile,) error {
+	defer close(out)
+
 	return filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
 		select {
 		case <-ctx.Done():
@@ -41,8 +43,11 @@ func (s *Scanner) walk(ctx context.Context, root string, it *Iterator) error {
 			Info:         info,
 		}
 		
-		it.add(s.process(entry))
-		
+		select {
+		case <- ctx.Done():
+			return ctx.Err()
+		case out <- s.process(entry):
+		}
 		return nil
 	})
 }

@@ -26,9 +26,11 @@ func (s *Scanner) Scan(ctx context.Context, root string) (*Iterator, error) {
 	if err != nil {
 		return nil, err
 	}
-	it := newIterator(ctx)
-	if err := s.walk(ctx, abs, it); err != nil {
-		return nil, err
-	}
-	return it, nil
+	ch := make(chan SourceFile, 128)
+	
+	go func() {
+		_ = s.walk(ctx, abs, ch)
+	} ()
+
+	return newIterator(ctx, ch), nil
 }
