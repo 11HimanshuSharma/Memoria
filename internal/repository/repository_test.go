@@ -4,26 +4,26 @@ import (
 )
 
 func TestDiscover(t *testing.T) {
-	ctx, err := Discover(".")
+	repo, err := Discover(".")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if ctx.Root == "" {
+	if repo.Root == "" {
 		t.Fatal("repository root should not be empty")
 	}
-	if ctx.Name == "" {
+	if repo.Name == "" {
 		t.Fatal("repository name should not be empty")
 	}
 
-	if ctx.Language != Go {
-		t.Fatalf("expected language %q got %q", Go, ctx.Language)
+	if repo.Module == nil {
+		t.Fatal("module should not be nil")
 	}
-
-	if ctx.BuildSystem != GoModules {
-		t.Fatalf("expected build system %q got %q", GoModules, ctx.BuildSystem)
+	
+	if repo.Module.Name == "" {
+		t.Fatal("module name should not be empty")
 	}
-
-	if ctx.Module == "" {
-		t.Fatal("module should not be empty")
+	
+	if repo.Git == nil {
+		t.Fatal("git info should not be nil")
 	}
 }

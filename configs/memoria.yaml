@@ -1,0 +1,13 @@
+vault:
+  path: ".memoria/vault"
+
+project:
+  path: "."
+
+
+llm: 
+  provider: "anthropic"
+  model: "claude-sonnet-4"
+
+logging:
+  level: "info"
