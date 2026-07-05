@@ -21,10 +21,14 @@ func New(opts ...Option) *Scanner {
 	}
 }
 
-func (s *Scanner) Scan(ctx context.Context, root string) ([]SourceFile, error) {
-	root, err := filepath.Abs(root)
+func (s *Scanner) Scan(ctx context.Context, root string) (*Iterator, error) {
+	abs, err := filepath.Abs(root)
 	if err != nil {
 		return nil, err
 	}
-	return s.walk(ctx, root)
+	it := newIterator(ctx)
+	if err := s.walk(ctx, abs, it); err != nil {
+		return nil, err
+	}
+	return it, nil
 }
