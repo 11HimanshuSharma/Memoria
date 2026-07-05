@@ -1,7 +1,6 @@
 package scanner
 
 import (
-	"path/filepath"
 	"strings"
 )
 
@@ -29,6 +28,3 @@ func (s *Scanner) shouldSkipDirectory(name string) bool {
 	return false
 }
 
-func extension(path string) string {
-	return strings.ToLower(filepath.Ext(path))
-}

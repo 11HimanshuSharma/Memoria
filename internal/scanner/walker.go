@@ -36,16 +36,14 @@ func (s *Scanner) walk(ctx context.Context, root string) ([]SourceFile, error) {
 		if err != nil {
 			return err
 		}
-		
-		files = append(files, SourceFile{
-			Path:         path,
+
+		entry := Entry {
+			Path: path,
 			RelativePath: relative,
-			Name:         d.Name(),
-			Extension:    extension(path),
-			Size:         info.Size(),
-			ModifiedAt:   info.ModTime(),
-			Mode:         info.Mode(),
-		})
+			Info: info,
+		}
+		
+		files = append(files,s.process(entry))
 		
 		return nil
 	})
