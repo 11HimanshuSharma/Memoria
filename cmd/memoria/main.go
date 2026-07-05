@@ -1,11 +1,12 @@
 package main
+
 import (
-	"log"
-	"github.com/11himanshusharma/memoria/internal/cli"
 	"github.com/11himanshusharma/memoria/internal/app"
+	"github.com/11himanshusharma/memoria/internal/cli"
+	"log"
 )
 
-func main(){
+func main() {
 	a, err := app.Bootstrap("configs/memoria.yaml")
 	if err != nil {
 		log.Fatal(err)

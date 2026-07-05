@@ -1,9 +1,9 @@
 package config
 
 type Config struct {
-	Vault VaultConfig `yaml:"vault"`
+	Vault   VaultConfig   `yaml:"vault"`
 	Project ProjectConfig `yaml:"project"`
-	LLM LLMConfig `yaml:"llm"`
+	LLM     LLMConfig     `yaml:"llm"`
 	Logging LoggingConfig `yaml:"logging"`
 }
 
@@ -15,8 +15,8 @@ type ProjectConfig struct {
 	Path string `yaml:"path"`
 }
 type LLMConfig struct {
-	Provider string `yaml:"Provider"`
-	Model string `yaml:"model"`
+	Provider string `yaml:"provider"`
+	Model    string `yaml:"model"`
 }
 
 type LoggingConfig struct {

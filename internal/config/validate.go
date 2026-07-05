@@ -12,5 +12,12 @@ func (c *Config) Validate() error {
 	if c.LLM.Provider == "" {
 		return fmt.Errorf("llm.provider is required")
 	}
+	if c.LLM.Model == "" {
+		return fmt.Errorf("llm.model is required")
+	}
+	if c.Logging.Level == "" {
+		return fmt.Errorf("Logging.level is required")
+	}
+
 	return nil
 }

@@ -14,8 +14,6 @@ var versionCmd = &cobra.Command{
 	Use: "version",
 	// Short: "Print Memoria version",
 	Run: func(cmd *cobra.Command, args []string) {
-		cfg: application.Config()
-		fmt.Println(cfg.LLM.Provider)
 		fmt.Println(version.Version)
 	},
 }
