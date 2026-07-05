@@ -27,6 +27,9 @@ func (s *Scanner) walk(ctx context.Context, root string, out chan<- *SourceFile,
 			}
 			return nil
 		}
+		if s.shouldSkipDirectory(d.Name()) {
+			return nil
+		}
 		
 		info, err := d.Info()
 		if err != nil {

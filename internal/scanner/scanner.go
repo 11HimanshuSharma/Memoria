@@ -8,6 +8,7 @@ import (
 
 type Scanner struct {
 	options Options
+	ignore *IgnoreEngine
 }
 
 func New(opts ...Option) *Scanner {
@@ -18,6 +19,7 @@ func New(opts ...Option) *Scanner {
 	}
 	return &Scanner{
 		options: options,
+		ignore: NewIgnoreEngine(),
 	}
 }
 
