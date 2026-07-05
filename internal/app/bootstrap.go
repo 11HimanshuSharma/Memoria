@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"github.com/11himanshusharma/memoria/internal/config"
+	"github.com/11himanshusharma/memoria/internal/repository"
 )
 
 func Bootstrap(configPath string) (*App, error) {
@@ -14,6 +15,10 @@ func Bootstrap(configPath string) (*App, error) {
 	if err := cfg.Validate(); err != nil {
 		return nil, fmt.Errorf("validate config: %w", err)
 	}
+	repo, err := repository.Discover(cfg.Project.Path)
+	if err != nil {
+		return nil, fmt.Errorf("discover repository: %w", err)
+	}
 
-	return New(cfg), nil
+	return New(cfg, repo), nil
 }

@@ -1,9 +1,10 @@
 package main
 
 import (
+	"log"
+
 	"github.com/11himanshusharma/memoria/internal/app"
 	"github.com/11himanshusharma/memoria/internal/cli"
-	"log"
 )
 
 func main() {
