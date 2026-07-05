@@ -1,1 +1,17 @@
 notes.md
+
+bin/
+
+dist/
+
+coverage.out
+
+*.test
+
+.env
+
+.idea/
+
+.vscode/
+
+.DS_Store
