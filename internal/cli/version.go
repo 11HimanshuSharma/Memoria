@@ -12,10 +12,10 @@ func init() {
 
 var versionCmd = &cobra.Command{
 	Use: "version",
-	Short: "Print Memoria version",
+	// Short: "Print Memoria version",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("Version : %s\n", version.Version)
-		fmt.Printf("Commit : %s\n", version.Commit)
-		fmt.Printf("Date : %s\n", version.Date)
+		cfg: application.Config()
+		fmt.Println(cfg.LLM.Provider)
+		fmt.Println(version.Version)
 	},
 }

@@ -15,8 +15,5 @@ func Bootstrap(configPath string) (*App, error) {
 		return nil, fmt.Errorf("validate config: %w", err)
 	}
 	
-	return &App{
-		Config: cfg,
-
-	}, nil
+	return New(cfg), nil
 }

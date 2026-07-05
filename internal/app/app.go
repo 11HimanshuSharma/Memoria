@@ -5,5 +5,16 @@ import (
 )
 
 type App struct {
-	Config *config.Config
+	config *config.Config
+}
+
+func New(cfg *config.Config) *App {
+	return &App{
+		config: cfg,
+	}
+
+}
+
+func (a *App) Config() *config.Config {
+	return a.config
 }

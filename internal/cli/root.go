@@ -3,8 +3,11 @@ package cli
 
 import ( 
 	"github.com/spf13/cobra"
+	"github.com/11himanshusharma/memoria/internal/app"
 
 )
+
+var application *app.App
 
 var rootCmd = &cobra.Command{
 	Use: "memoria",
@@ -14,6 +17,7 @@ var rootCmd = &cobra.Command{
 }
 
 
-func Execute() error {
+func Execute(a *app.App) error {
+	application = a
 	return rootCmd.Execute()
 }
