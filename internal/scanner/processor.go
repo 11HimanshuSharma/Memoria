@@ -2,10 +2,10 @@ package scanner
 
 import "path/filepath"
 
-func (s *Scanner) process(entry Entry) SourceFile {
+func (s *Scanner) process(entry Entry) *SourceFile {
 	info := entry.Info
 
-	return SourceFile{
+	return &SourceFile{
 		Path:         entry.Path,
 		RelativePath: entry.RelativePath,
 		Name:         info.Name(),

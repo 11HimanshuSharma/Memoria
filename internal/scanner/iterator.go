@@ -4,14 +4,15 @@ import "context"
 
 type Iterator struct {
 	ctx context.Context
-	files <- chan SourceFile
-	current SourceFile
+	files <- chan *SourceFile
+	current *SourceFile
 	err error
 }
 
 func newIterator(
 	ctx context.Context,
-	files <-chan SourceFile,
+	files <-chan *SourceFile,
+	errors <- chan error,
 ) *Iterator {
 	return &Iterator{
 		ctx: ctx,
@@ -33,7 +34,7 @@ func (it *Iterator) Next() bool {
 	}
 }
 
-func (it *Iterator) File() SourceFile {
+func (it *Iterator) File() *SourceFile {
 	return it.current
 }
 func (it *Iterator) Err() error {

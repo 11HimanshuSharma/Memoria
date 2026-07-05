@@ -6,8 +6,9 @@ import (
 	"path/filepath"
 )
 
-func (s *Scanner) walk(ctx context.Context, root string, out chan<- SourceFile,) error {
+func (s *Scanner) walk(ctx context.Context, root string, out chan<- *SourceFile,errs chan<- error) error {
 	defer close(out)
+	defer close(errs)
 
 	return filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
 		select {
