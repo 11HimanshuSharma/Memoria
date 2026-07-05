@@ -7,10 +7,10 @@ import (
 
 type App struct {
 	config *config.Config
-	repository *repository.Context
+	repository *repository.Repository
 }
 
-func New(cfg *config.Config, repo *repository.Context) *App {
+func New(cfg *config.Config, repo *repository.Repository) *App {
 	return &App{
 		config: cfg,
 		repository: repo,
@@ -23,6 +23,6 @@ func (a *App) Config() *config.Config {
 }
 
 
-func (a *App) Repository() *repository.Context {
+func (a *App) Repository() *repository.Repository {
 	return a.repository
 }

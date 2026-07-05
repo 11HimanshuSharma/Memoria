@@ -5,40 +5,35 @@ import (
 	"path/filepath"
 )
 
-func Discover(path string) (*Context, error) {
-	ctx := &Context{}
-
+func Discover(path string)(*Repository, error) {
 	abs, err := filepath.Abs(path)
 	if err != nil {
 		return nil, err
 	}
-	root, ok, err := findGitRoot(abs)
-	if err != nil {
+	repo := &Repository{}
+	//Git discovery
+	if root, ok, err := findGitRoot(abs); err != nil {
 		return nil, err
+	} else if ok {
+		repo.Git = &GitInfo{
+			Root: root,
+		}
+		repo.Root = root
+		repo.Name = filepath.Base(root)
 	}
 
-	if ok {
-		ctx.IsGit = true
-		ctx.Root = root
-		ctx.Name = filepath.Base(root)
-	}
-
-	// -------------
-	goRoot, module, ok, err := findGoMod(abs)
-	if err != nil {
+	//go module discovery
+	if root, moduleName, ok, err := findGoMod(abs); err != nil {
 		return nil, err
+	} else if ok {
+		repo.Root = root
+		repo.Name = filepath.Base(root)
+		repo.Module = &Module{
+			Name: moduleName,
+		}
 	}
-	if ok {
-		ctx.Root = goRoot
-		ctx.Name = filepath.Base(goRoot)
-
-		ctx.Module = module
-		ctx.Language = Go
-		ctx.BuildSystem = GoModules
-	}
-
-	if ctx.Root == "" {
+	if repo.Root == "" {
 		return nil, fmt.Errorf("repository not found")
 	}
-	return ctx, nil
+	return repo, nil
 }

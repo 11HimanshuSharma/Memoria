@@ -34,9 +34,15 @@ var doctorCmd = &cobra.Command{
 		fmt.Println("──────────────────────────────")
 		fmt.Println("Name         :", repo.Name)
 		fmt.Println("Root         :", repo.Root)
-		fmt.Println("Module       :", repo.Module)
-		fmt.Println("Language     :", repo.Language)
-		fmt.Println("Build System :", repo.BuildSystem)
-		fmt.Println("Git          :", repo.IsGit)
+		if repo.Module != nil {
+			fmt.Println("Module :", repo.Module.Name)
+		} else {
+			fmt.Println("Module : <none>")
+		}
+		if repo.Git != nil {
+			fmt.Println("Git Root :", repo.Git.Root)
+		} else {
+			fmt.Println("Git : <not initialized>")
+		}
 	},
 }
