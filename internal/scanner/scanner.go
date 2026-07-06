@@ -7,18 +7,18 @@ import (
 
 
 type Scanner struct {
-	options Options
+	policy Policy
 	ignore *IgnoreEngine
 }
 
 func New(opts ...Option) *Scanner {
-	options := defaultOptions()
+	options := DefaultPolicy()
 
 	for _, opt := range opts {
 		opt(&options)
 	}
 	return &Scanner{
-		options: options,
+		policy: options,
 		ignore: NewIgnoreEngine(),
 	}
 }

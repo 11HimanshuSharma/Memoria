@@ -1,28 +1,35 @@
 package scanner
 
-import (
-	"strings"
-)
-
-
 func (s *Scanner) shouldSkipDirectory(name string) bool {
-	if s.options.IgnoreGit && s.ignore.IgnoreDir(name) {
+
+	if s.policy.IgnoreDirectories &&
+		s.ignore.IgnoreDir(name) {
+
 		return true
 	}
-	if !s.options.IncludeHidden && s.ignore.Hidden(name) {
+
+	if !s.policy.IncludeHidden &&
+		s.ignore.Hidden(name) {
+
 		return true
 	}
+
 	return false
 }
 
-
 func (s *Scanner) shouldSkipFile(name string) bool {
-	if s.ignore.IgnoreFile(name) {
-		return true
-	}
-	if !s.options.IncludeHidden && s.ignore.Hidden(name) {
-		return true
-	}
-	return false
 
+	if s.policy.IgnoreFiles &&
+		s.ignore.IgnoreFile(name) {
+
+		return true
+	}
+
+	if !s.policy.IncludeHidden &&
+		s.ignore.Hidden(name) {
+
+		return true
+	}
+
+	return false
 }

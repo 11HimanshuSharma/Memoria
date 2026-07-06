@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func (s *Scanner) walk(ctx context.Context, root string, out chan<- *SourceFile,errs chan<- error) error {
+func (s *Scanner) walk(ctx context.Context, root string, out chan<- *SourceFile, errs chan<- error) error {
 	defer close(out)
 	defer close(errs)
 
@@ -16,11 +16,11 @@ func (s *Scanner) walk(ctx context.Context, root string, out chan<- *SourceFile,
 			return ctx.Err()
 		default:
 		}
-		
+
 		if err != nil {
 			return err
 		}
-		
+
 		if d.IsDir() {
 			if s.shouldSkipDirectory(d.Name()) {
 				return filepath.SkipDir
@@ -30,25 +30,25 @@ func (s *Scanner) walk(ctx context.Context, root string, out chan<- *SourceFile,
 		if s.shouldSkipDirectory(d.Name()) {
 			return nil
 		}
-		
+
 		info, err := d.Info()
 		if err != nil {
 			return err
 		}
-		
+
 		relative, err := filepath.Rel(root, path)
 		if err != nil {
 			return err
 		}
-		
+
 		entry := Entry{
 			Path:         path,
 			RelativePath: relative,
 			Info:         info,
 		}
-		
+
 		select {
-		case <- ctx.Done():
+		case <-ctx.Done():
 			return ctx.Err()
 		case out <- s.process(entry):
 		}
