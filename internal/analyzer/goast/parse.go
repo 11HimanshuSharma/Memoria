@@ -38,5 +38,6 @@ func (a *Analyzer) extractPasses(
 		result,
 	)
 	a.extractFunctions(file, result)
+	a.extractStructs(file, result)
 	return nil
 }

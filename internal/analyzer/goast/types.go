@@ -26,6 +26,21 @@ type Function struct {
 
 type Struct struct {
 	Name string
+
+	Exported bool
+
+	Fields []StructField
+}
+
+type StructField struct {
+	Name string
+
+	Type string
+
+	Tag string
+
+	Embedded bool
+
 	Exported bool
 }
 
