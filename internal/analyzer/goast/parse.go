@@ -37,5 +37,6 @@ func (a *Analyzer) extractPasses(
 		file,
 		result,
 	)
+	a.extractFunctions(file, result)
 	return nil
 }

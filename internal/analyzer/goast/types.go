@@ -18,6 +18,10 @@ type Function struct {
 	Name string
 	Receiver string
 	Exported bool
+	Parameters []Parameter
+	TypeParameters []TypeParameter
+	Variadic bool
+	Result []Parameter
 }
 
 type Struct struct {
