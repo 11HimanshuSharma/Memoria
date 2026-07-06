@@ -1,36 +1,30 @@
 package pipeline
 
-import (
-	"context"
-)
-
 type Pipeline struct {
-	ctx *Context
+	runtime *Runtime
+	stages  []Stage
 }
 
-func New(ctx *Context) *Pipeline {
-	return &Pipeline{ctx: ctx}
+func New(runtime *Runtime) *Pipeline {
+	return &Pipeline{
+		runtime: runtime,
+		stages:  make([]Stage, 0),
+	}
 
 }
-
+func (p *Pipeline) Register(stage Stage) {
+	p.stages = append(p.stages, stage)
+}
 
 func (p *Pipeline) Run() error {
-	it, err := p.ctx.Scanner.Scan(p.ctx.Context, 
-	p.ctx.Repository.Root)
-
-	if err != nil {
-		return err
-	}
-	for it.Next() {
-		file := it.File()
-
-		_, err := p.ctx.Loader.Load(
-			p.ctx.Context,
-			file,
+	for _, stage := range p.stages {
+		err := stage.Run(
+			p.runtime.Context,
+			p.runtime,
 		)
 		if err != nil {
 			return err
 		}
 	}
-	return it.Err()
+	return nil
 }

@@ -1,8 +1,6 @@
 package app
 
 import (
-	"go/scanner"
-
 	"github.com/11himanshusharma/memoria/internal/config"
 	"github.com/11himanshusharma/memoria/internal/document"
 	"github.com/11himanshusharma/memoria/internal/pipeline"
@@ -11,11 +9,11 @@ import (
 )
 
 type App struct {
-	config *config.Config
+	config     *config.Config
 	repository *repository.Repository
-	scanner *scanner.Scanner
-	loader *document.Loader
-	pipeline *pipeline.Pipeline
+	scanner    *scanner.Scanner
+	loader     *document.Loader
+	pipeline   *pipeline.Pipeline
 }
 
 func (a *App) Pipeline() *pipeline.Pipeline {
@@ -24,16 +22,14 @@ func (a *App) Pipeline() *pipeline.Pipeline {
 
 func New(cfg *config.Config, repo *repository.Repository) *App {
 	return &App{
-		config: cfg,
+		config:     cfg,
 		repository: repo,
 	}
-
 }
 
 func (a *App) Config() *config.Config {
 	return a.config
 }
-
 
 func (a *App) Repository() *repository.Repository {
 	return a.repository

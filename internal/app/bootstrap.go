@@ -5,7 +5,11 @@ import (
 	"fmt"
 
 	"github.com/11himanshusharma/memoria/internal/config"
+	"github.com/11himanshusharma/memoria/internal/document"
+	"github.com/11himanshusharma/memoria/internal/pipeline"
+	"github.com/11himanshusharma/memoria/internal/pipeline/stages"
 	"github.com/11himanshusharma/memoria/internal/repository"
+	"github.com/11himanshusharma/memoria/internal/scanner"
 )
 
 func Bootstrap(configPath string) (*App, error) {
@@ -21,22 +25,26 @@ func Bootstrap(configPath string) (*App, error) {
 	if err != nil {
 		return nil, fmt.Errorf("discover repository: %w", err)
 	}
-	scanner := scanner.New()
+	
+	sc := scanner.New()
 	loader := document.NewLoader()
-	pipeline := pipeline.New(
-		&pipeline.Context{
-			Context: context.Background(),
+	pipe := pipeline.New(
+		&pipeline.Runtime{
+			Context:    context.Background(),
 			Repository: repo,
-			Scanner: scanner,
-			Loader : loader,
-		}
+			Scanner:    sc,
+			Loader:     loader,
+		},
+	)
+	pipe.Register(
+		stages.NewScanner(),
 	)
 
 	return &App{
-		config: cfg,
-		repo: repo,
-		scanner: scanner,
-		loader: loader,
-		pipeline: pipeline,
+		config:     cfg,
+		repository: repo,
+		scanner:    sc,
+		loader:     loader,
+		pipeline:   pipe,
 	}, nil
 }

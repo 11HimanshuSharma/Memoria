@@ -7,7 +7,7 @@ import (
 	"github.com/11himanshusharma/memoria/internal/scanner"
 )
 
-type Context struct {
+type Runtime struct {
 	Context context.Context
 	Repository *repository.Repository
 	Scanner *scanner.Scanner
