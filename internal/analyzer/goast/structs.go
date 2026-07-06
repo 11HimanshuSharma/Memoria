@@ -39,9 +39,12 @@ func (a *Analyzer) extractStructs(
 
 			item := Struct{
 
-				Name: ts.Name.Name,
+				Declaration: Declaration{
 
-				Exported: ts.Name.IsExported(),
+					Name: ts.Name.Name,
+
+					Exported: ts.Name.IsExported(),
+				},
 			}
 
 			item.Fields =

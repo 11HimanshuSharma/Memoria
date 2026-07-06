@@ -25,9 +25,7 @@ type Function struct {
 }
 
 type Struct struct {
-	Name string
-
-	Exported bool
+	Declaration
 
 	Fields []StructField
 }
@@ -45,6 +43,9 @@ type StructField struct {
 }
 
 type Interface struct {
-	Name string
-	Exported bool
+	Declaration
+
+	Methods []Function
+
+	Embedded []string
 }
