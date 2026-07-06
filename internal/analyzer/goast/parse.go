@@ -13,7 +13,7 @@ func (a *Analyzer) parseDocument(
 	doc *document.Document,
 	result *Result,
 ) error {
-	fset := token.NewFileSet()
+	fset := a.fset
 	file, err := parser.ParseFile(
 		fset,
 		doc.File.Path,
@@ -23,15 +23,19 @@ func (a *Analyzer) parseDocument(
 	if err != nil {
 		return fmt.Errorf("parse %s: %w", doc.File.RelativePath, err,)
 	}
-	return a.extract(
+	return a.extractPasses(
 		file, result,
 	)
 }
 
-func (a *Analyzer) extract(
+func (a *Analyzer) extractPasses(
 	file *ast.File,
 	result *Result,
 ) error {
 	result.PackageName = file.Name.Name
+	a.extractImports(
+		file,
+		result,
+	)
 	return nil
 }

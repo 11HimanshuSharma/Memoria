@@ -1,13 +1,19 @@
 package goast
 
 import (
+	"go/token"
+
 	"github.com/11himanshusharma/memoria/internal/document"
 )
 
-type Analyzer struct {}
+type Analyzer struct {
+	fset *token.FileSet
+}
 
 func New() *Analyzer{
-	return &Analyzer{}
+	return &Analyzer{
+		fset: token.NewFileSet(),
+	}
 }
 
 func (a *Analyzer) Analyze(doc *document.Document,) (*Result, error) {
