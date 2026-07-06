@@ -1,7 +1,9 @@
 package app
 
 import (
+	"context"
 	"fmt"
+
 	"github.com/11himanshusharma/memoria/internal/config"
 	"github.com/11himanshusharma/memoria/internal/repository"
 )
@@ -19,6 +21,22 @@ func Bootstrap(configPath string) (*App, error) {
 	if err != nil {
 		return nil, fmt.Errorf("discover repository: %w", err)
 	}
+	scanner := scanner.New()
+	loader := document.NewLoader()
+	pipeline := pipeline.New(
+		&pipeline.Context{
+			Context: context.Background(),
+			Repository: repo,
+			Scanner: scanner,
+			Loader : loader,
+		}
+	)
 
-	return New(cfg, repo), nil
+	return &App{
+		config: cfg,
+		repo: repo,
+		scanner: scanner,
+		loader: loader,
+		pipeline: pipeline,
+	}, nil
 }
